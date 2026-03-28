@@ -27,7 +27,13 @@ app.use(
 
 
 // ✅ Handle preflight requests (important!)
-app.options('*', cors());
+app.options(
+  '*',
+  cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
+  })
+);
 
 connectDB(); // ✅ Connect to MongoDB using the new connectDB function
 
