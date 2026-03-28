@@ -20,12 +20,11 @@ const app = express();
 // ✅ Proper CORS setup (remove any duplicate `app.use(cors())`)
 app.use(
   cors({
-    origin: 'http://localhost:3000', // React app
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    origin: process.env.FRONTEND_URL,
     credentials: true,
   })
 );
+
 
 // ✅ Handle preflight requests (important!)
 app.options('*', cors());
@@ -55,9 +54,8 @@ app.post('/api/chat', async (req, res) => {
     const reply = result.response.text();
 
     // ✅ Explicitly include CORS headers in response
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-
+   
+   
     res.json({ reply });
   } catch (error) {
     console.error('Gemini error:', error);
